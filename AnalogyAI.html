@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analogy — Beginning the AI Conversation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5EFE8;
+    --pink: #E8185A;
+    --mint: #7ECFB3;
+    --blue: #2B3BAF;
+    --ink: #1A1A2E;
+    --mid: #5A5A72;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 56px 40px 80px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 56px;
+    gap: 24px;
+  }
+
+  .logo-mark {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+  }
+
+  /* Isometric cube SVG built from brand colors */
+
+  .wordmark {
+    text-align: right;
+  }
+
+  .wordmark-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .wordmark-sub {
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-top: 4px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    border-top: 2px solid var(--ink);
+    padding-top: 40px;
+    margin-bottom: 52px;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 16px;
+  }
+
+  .hero-headline {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    max-width: 560px;
+    margin-bottom: 20px;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--blue);
+  }
+
+  .hero-body {
+    font-size: 1rem;
+    color: var(--mid);
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  /* ── DIVIDER ── */
+  .pillars-label {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .pillars-label span {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    white-space: nowrap;
+  }
+
+  .pillars-label::after {
+    content: '';
+    display: block;
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    color: var(--mid);
+    opacity: 0.3;
+  }
+
+  /* ── PILLARS ── */
+  .pillars {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 52px;
+  }
+
+  .pillar {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 0 28px;
+    padding: 32px 0;
+    border-bottom: 1px solid rgba(26,26,46,0.12);
+    position: relative;
+  }
+
+  .pillar:first-child {
+    border-top: 1px solid rgba(26,26,46,0.12);
+  }
+
+  .pillar-number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3rem;
+    line-height: 1;
+    color: rgba(26,26,46,0.18);
+    padding-top: 2px;
+    user-select: none;
+  }
+
+  .pillar-content {}
+
+  .pillar-tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-bottom: 10px;
+  }
+
+  .pillar:nth-child(1) .pillar-tag { background: var(--pink); color: white; }
+  .pillar:nth-child(2) .pillar-tag { background: var(--blue); color: white; }
+  .pillar:nth-child(3) .pillar-tag { background: var(--mint); color: var(--ink); }
+
+  .pillar-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.45rem;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .pillar-body {
+    font-size: 0.92rem;
+    color: var(--mid);
+    line-height: 1.75;
+    max-width: 480px;
+  }
+
+  .pillar-methods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+  }
+
+  .method-chip {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid rgba(26,26,46,0.2);
+    padding: 3px 10px;
+    border-radius: 20px;
+    color: var(--mid);
+  }
+
+  /* ── PHILOSOPHY BRIDGE ── */
+  .bridge {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 36px 40px;
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bridge::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 180px;
+    height: 180px;
+    background: var(--blue);
+    opacity: 0.35;
+    border-radius: 50%;
+    filter: blur(60px);
+  }
+
+  .bridge::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 20px;
+    width: 120px;
+    height: 120px;
+    background: var(--pink);
+    opacity: 0.2;
+    border-radius: 50%;
+    filter: blur(50px);
+  }
+
+  .bridge-quote {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--cream);
+    position: relative;
+    z-index: 1;
+    margin-bottom: 16px;
+  }
+
+  .bridge-attribution {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mint);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 32px;
+  }
+
+  .cta-heading {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .cta-body {
+    font-size: 0.88rem;
+    color: var(--mid);
+    line-height: 1.7;
+    max-width: 380px;
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .cta-button {
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    white-space: nowrap;
+    text-align: center;
+    transition: opacity 0.2s ease;
+  }
+
+  .cta-button:hover {
+    opacity: 0.85;
+  }
+
+  .cta-button--blue {
+    background: var(--blue);
+  }
+
+  .cta-button--pink {
+    background: var(--pink);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 52px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(26,26,46,0.12);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-name {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  .footer-contact {
+    font-size: 0.72rem;
+    color: var(--mid);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-contact a {
+    color: var(--pink);
+    text-decoration: none;
+  }
+
+  /* ── PERCEPTION TEASER ── */
+  .perception {
+    margin-top: 52px;
+    border: 1.5px dashed rgba(26,26,46,0.18);
+    padding: 32px 36px;
+    position: relative;
+    background: linear-gradient(135deg, rgba(126,207,179,0.07) 0%, rgba(43,59,175,0.06) 100%);
+  }
+
+  .perception-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .perception-eyebrow-tag {
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mint);
+    background: var(--ink);
+    padding: 3px 10px;
+    border-radius: 2px;
+  }
+
+  .perception-eyebrow-line {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+    opacity: 0.7;
+  }
+
+  .perception-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .perception-body {
+    font-size: 0.88rem;
+    color: var(--mid);
+    line-height: 1.75;
+    max-width: 520px;
+  }
+
+  .perception-corner {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(26,26,46,0.22);
+    font-weight: 500;
+  }
+
+  /* ── PRINT / PDF ── */
+  @media print {
+    body { background: white; }
+    .page { padding: 32px 32px 48px; }
+    .bridge::before, .bridge::after { display: none; }
+    .cta-button { background: var(--ink) !important; }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 560px) {
+    .page { padding: 36px 24px 60px; }
+    .cta-section { grid-template-columns: 1fr; }
+    header { flex-direction: row; }
+    .bridge { padding: 28px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <header>
+    <!-- Isometric cube built from brand palette -->
+    <svg class="logo-mark" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Top face (pink) -->
+      <polygon points="26,4 48,16 26,28 4,16" fill="#E8185A"/>
+      <!-- Left face (mint) -->
+      <polygon points="4,16 26,28 26,48 4,36" fill="#7ECFB3"/>
+      <!-- Right face (blue) -->
+      <polygon points="48,16 26,28 26,48 48,36" fill="#2B3BAF"/>
+      <!-- Edge lines -->
+      <polyline points="26,4 48,16 26,28 4,16 26,4" fill="none" stroke="#F5EFE8" stroke-width="0.8"/>
+      <line x1="26" y1="28" x2="26" y2="48" stroke="#F5EFE8" stroke-width="0.8"/>
+      <line x1="4" y1="16" x2="4" y2="36" stroke="#F5EFE8" stroke-width="0.8"/>
+      <line x1="48" y1="16" x2="48" y2="36" stroke="#F5EFE8" stroke-width="0.8"/>
+      <line x1="4" y1="36" x2="26" y2="48" stroke="#F5EFE8" stroke-width="0.8"/>
+      <line x1="48" y1="36" x2="26" y2="48" stroke="#F5EFE8" stroke-width="0.8"/>
+    </svg>
+
+    <div class="wordmark">
+      <div class="wordmark-name">Analogy</div>
+      <div class="wordmark-sub">AI Communications</div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">A Framework for Getting Started</div>
+    <h1 class="hero-headline">
+      Beginning the <em>AI conversation</em> in your organization
+    </h1>
+    <p class="hero-body">
+      Artificial intelligence doesn't enter a company through software. It enters through people — their questions, their fears, their curiosity, and their judgment. What follows is a proven process for starting that conversation well.
+    </p>
+  </section>
+
+  <!-- PILLARS -->
+  <div class="pillars-label">
+    <span>Three Pillars</span>
+  </div>
+
+  <div class="pillars">
+
+    <!-- PILLAR 1: FLUENCY -->
+    <div class="pillar">
+      <div class="pillar-number">01</div>
+      <div class="pillar-content">
+        <span class="pillar-tag">Fluency</span>
+        <h2 class="pillar-title">Build a shared language</h2>
+        <p class="pillar-body">
+          Before any strategic decisions can be made, leadership and their teams need a common foundation. This means leveling up on the basics — not the hype, not the fear, but the actual landscape — so that everyone in the room is working from the same understanding. Without shared language, AI conversations stall before they start.
+        </p>
+        <div class="pillar-methods">
+          <span class="method-chip">Executive Talk</span>
+          <span class="method-chip">Day of Learning</span>
+          <span class="method-chip">Curated Asset Library</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 2: PHILOSOPHY -->
+    <div class="pillar">
+      <div class="pillar-number">02</div>
+      <div class="pillar-content">
+        <span class="pillar-tag">Philosophy</span>
+        <h2 class="pillar-title">Align AI to your values</h2>
+        <p class="pillar-body">
+          The tools you adopt will reflect — and reinforce — who you are as an organization. Bringing critical decision-makers together to examine how your mission, vision, and values should shape your AI choices is not a soft exercise. It is the most important strategic work you will do. This is where you decide what AI will and won't be asked to do in your community.
+        </p>
+        <div class="pillar-methods">
+          <span class="method-chip">Leadership Workshop</span>
+          <span class="method-chip">Values Mapping</span>
+          <span class="method-chip">Decision Framework</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 3: PROFICIENCY -->
+    <div class="pillar">
+      <div class="pillar-number">03</div>
+      <div class="pillar-content">
+        <span class="pillar-tag">Proficiency</span>
+        <h2 class="pillar-title">Build real capability across the organization</h2>
+        <p class="pillar-body">
+          Proficiency isn't a training event. It is an ongoing culture of learning, built through education, peer-to-peer connection, and the kind of genuine comfort with tools that only comes from use. This pillar ensures the conversation doesn't stop at the executive level — it moves through the entire community and grows over time.
+        </p>
+        <div class="pillar-methods">
+          <span class="method-chip">Organization-wide Training</span>
+          <span class="method-chip">Peer Learning Networks</span>
+          <span class="method-chip">Ongoing Communications</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PHILOSOPHY BRIDGE -->
+  <div class="bridge">
+    <p class="bridge-quote">
+      "Technology adoption happens through relationships, not features. Every industrial shift in history has been navigated the same way — by helping people understand where they stand in the change, together."
+    </p>
+    <div class="bridge-attribution">Katherine Gorman · Founder, Analogy</div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div>
+      <h3 class="cta-heading">Ready to begin the conversation?</h3>
+      <p class="cta-body">
+        Analogy works with organizations at the moment of AI inflection — before the decisions get made, while there is still space to shape them well. Start with a conversation.
+      </p>
+    </div>
+    <div class="cta-buttons">
+      <a class="cta-button cta-button--blue" href="https://www.katherinelgorman.com" target="_blank">
+        Learn more about Katherine
+      </a>
+      <a class="cta-button cta-button--pink" href="mailto:klg@katherinelgorman.com">
+        Book a conversation
+      </a>
+    </div>
+  </div>
+
+  <!-- PERCEPTION TEASER -->
+  <div class="perception">
+    <div class="perception-corner">What comes next</div>
+    <div class="perception-eyebrow">
+      <span class="perception-eyebrow-tag">Perception</span>
+      <span class="perception-eyebrow-line">The horizon beyond proficiency</span>
+    </div>
+    <h3 class="perception-title">When your organization begins to see what it couldn't see before</h3>
+    <p class="perception-body">
+      Organizations that move through Fluency, Philosophy, and Proficiency reach a threshold moment — the point at which AI stops being something you adopt and becomes something you wield. Perception is the capacity to look at your own data, your own operations, your own community with new eyes: to recognize patterns, surface hidden opportunities, and build tools designed specifically for who you are. This is bespoke intelligence. It is not available at the beginning of the journey. It is what the journey is for.
+    </p>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-name">Katherine Gorman · Analogy</div>
+    <div class="footer-contact">
+      <a href="mailto:klg@katherinelgorman.com">klg@katherinelgorman.com</a>
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>
